@@ -22,7 +22,7 @@ function varargout = MotifEditor(varargin)
 
 % Edit the above text to modify the response to help MotifEditor
 
-% Last Modified by GUIDE v2.5 10-Oct-2017 15:34:20
+% Last Modified by GUIDE v2.5 11-Oct-2017 12:19:34
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -339,3 +339,30 @@ function edit1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in AddStart.
+function AddStart_Callback(hObject, eventdata, handles)
+% hObject    handle to AddStart (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles=guidata(hObject);
+Motif=handles.Motif;
+f=handles.currF;
+plotdata(hObject,0);
+x=ginput(1);
+loc=x(:,1);
+loc = sort(loc);
+Motif(f).start=[Motif(f).start,loc(1)];
+Motif(f).stop=[Motif(f).stop,loc(1)+handles.tempLength];
+Motif(f).center=[Motif(f).center,mean(loc)];
+Motif(f).warp=[Motif(f).warp,1];
+[~,inds]=sort(Motif(f).center);
+Motif(f).start=Motif(f).start(inds);
+Motif(f).stop=Motif(f).stop(inds);
+Motif(f).center=Motif(f).center(inds);
+Motif(f).warp=Motif(f).warp(inds);
+handles.Motif=Motif;
+guidata(hObject,handles)
+plotdata(hObject,0);
