@@ -11,8 +11,8 @@ if ~isempty(answer)
     F=answer{1};
     template=answer{2};
     thresh=str2num(answer{3});
-    if ~strcmp(F(end),'/')
-        F=[F,'/'];
+    if ~strcmp(F(end),'\')
+        F=[F,'\'];
     end
     files=dir([F,'*.wav']);
     if isempty(files)

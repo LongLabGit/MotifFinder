@@ -30,8 +30,9 @@ cmap=parula(256);
 cmap(1:8,1:3)=zeros(8,3);    
 colormap(cmap);
 if ~rgb
-    imagesc(ax,T,F,S);set(gca,'ydir','normal')
+    imagesc(ax,T,F,S);
     set(ax,'clim',[min(S(:))+thr*range(S(:)),max(S(:))]);%change the colors
+    set(ax,'ydir','normal')
 else
     map=[min(S(:))+thr*range(S(:)),1.1*max(S(:))];
 %     map=[min(S(:))+thr*range(S(:)),1.1*max(S(:))];
