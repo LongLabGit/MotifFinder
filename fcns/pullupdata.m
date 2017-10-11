@@ -60,6 +60,12 @@ if ~isempty(answer)
     info=audioinfo(template);
     handles.tempLength=info.Duration;
     save fcns\StandardPaths.mat threshold folder template
+    
+    [wav,fs]=audioread(template);
+    plot(handles.axes5,(1:length(wav))/fs,wav,'k');
+    axis tight
+    vigiSpecGUI(handles.axes4,wav,fs);
+    
     guidata(hObject,handles);
 else
     error('no file provided')

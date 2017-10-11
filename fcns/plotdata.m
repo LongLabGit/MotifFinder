@@ -20,19 +20,19 @@ if ~isempty(prevLines)
     delete(prevLines);
 end
 
-plot(handles.axes2,(1:length(wave))/fs,wave)
+plot(handles.axes2,(1:length(wave))/fs,wave, 'k')
 ylim(handles.axes2,[-1,1])
 
 
 
 for m=1:length(Motif(f).start)
-    line(handles.axes1,Motif(f).start(m)*[1,1],[500,8e3],'color','g')
-    line(handles.axes1,Motif(f).stop(m)*[1,1],[500,8e3],'color','r')    
-    line(handles.axes1,Motif(f).center(m)*[1,1],[500,8e3],'color','c')
+    line(handles.axes1,Motif(f).start(m)*[1,1],[500,8e3],'color','g', 'linewidth', 2)
+    line(handles.axes1,Motif(f).stop(m)*[1,1],[500,8e3],'color','r', 'linewidth', 2)    
+    line(handles.axes1,Motif(f).center(m)*[1,1],[500,8e3],'color','c', 'linewidth', 2)
     
-    line(handles.axes2,Motif(f).start(m)*[1,1],[-1,1],'color','g')
-    line(handles.axes2,Motif(f).stop(m)*[1,1],[-1,1],'color','r')    
-    line(handles.axes2,Motif(f).center(m)*[1,1],[-1,1],'color','c')
+    line(handles.axes2,Motif(f).start(m)*[1,1],[-1,1],'color','g', 'linewidth', 2)
+    line(handles.axes2,Motif(f).stop(m)*[1,1],[-1,1],'color','r', 'linewidth', 2)    
+    line(handles.axes2,Motif(f).center(m)*[1,1],[-1,1],'color','c', 'linewidth', 2)
 end
 if ~specToo
     xlim(handles.axes2,xr);

@@ -23,9 +23,11 @@ if ~isempty(tR)
 end
 S=10*log10(P);
 S(S==-Inf)=min(isreal(S(:)));
-cmap=jet(256);    
-cmap(1:8,1:3)=zeros(8,3);    
+% cmap=jet(256);    
+% cmap(1:8,1:3)=zeros(8,3);    
 % cmap=bone(256);
+cmap=parula(256);    
+cmap(1:8,1:3)=zeros(8,3);    
 colormap(cmap);
 if ~rgb
     imagesc(ax,T,F,S);set(gca,'ydir','normal')

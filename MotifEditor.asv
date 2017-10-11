@@ -94,7 +94,6 @@ f=handles.currF;
 plotdata(hObject,0);
 x=ginput(2);
 loc=x(:,1);
-loc = sort(loc);
 Motif(f).start=[Motif(f).start,loc(1)];
 Motif(f).stop=[Motif(f).stop,loc(2)];
 Motif(f).center=[Motif(f).center,mean(loc)];
@@ -201,14 +200,9 @@ for t=1:length(Motif)
     mi=mi+2;
     line((handles.tempLength/2+offset/4e4)*[-1,1],(mi-1)*[1,1],'linestyle',':')
 end
-[wave, fs] = audioread(handles.template);
-shift = length(wave)/fs/2;
-plot((1:length(wave))/fs - shift, wave/max(abs(wave))*3 + mi + 1, 'b');
 axis tight
-set(gca,'ytick',[loc mi + 1]);
-set(gca,'yticklabel',[num2strVec(1:t); 'Template']);
-ylabel('Trial number');
-xlabel('Time (s)');
+set(gca,'ytick',loc);
+set(gca,'yticklabel',num2strVec(1:t));
 % --- Executes on button press in chngThr.
 function chngThr_Callback(hObject, eventdata, handles)
 % hObject    handle to chngThr (see GCBO)
@@ -233,7 +227,6 @@ if thresh>0&&thresh<1
         Motif(handles.currF).warp = warp;
         Motif(handles.currF).thresh = thresh;
         handles.Motif = Motif;
-        update = 1;
     else
         msgbox('Please try again with lower threshold... if there are motifs here...')
     end
@@ -264,7 +257,7 @@ handles=guidata(hObject);
 handles.currF=max(1,handles.currF-1);
 guidata(hObject,handles);
 plotdata(hObject,1);
-axis(handles.axes1,'tight');
+axis tight
 
 
 % --- Executes on button press in next.
@@ -277,7 +270,7 @@ handles=guidata(hObject);
 handles.currF=min(length(handles.files),handles.currF+1);
 guidata(hObject,handles);
 plotdata(hObject,1);
-axis(handles.axes1,'tight');
+axis tight
 
 % --- Executes on slider movement.
 function timeSlider_Callback(hObject, eventdata, handles)
@@ -322,7 +315,7 @@ if rem(f,1)==0&&f>0&&f<=length(handles.files)
     guidata(hObject);
     guidata(hObject,handles);
     plotdata(hObject,1);
-    axis(handles.axes1,'tight');
+    axis tight
 else
     msgbox('Have you tried giving a normal number maybe?')
 end
