@@ -54,7 +54,7 @@ function MotifEditor_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for MotifEditor
 handles.output = hObject;
-addpath fcns
+% addpath fcns%add it to path beforehand
 linkaxes([handles.axes1,handles.axes2],'x');
 % Update handles structure
 guidata(hObject, handles);

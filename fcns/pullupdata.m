@@ -1,6 +1,6 @@
 function pullupdata(hObject)
 handles=guidata(hObject);
-load fcns\StandardPaths.mat
+load StandardPaths.mat
 prompt = {'Folder Name','Template File','Threshold'};
 dlg_title = 'Load Data';
 defaultans = {folder,...                         %Change this to last path
@@ -59,7 +59,7 @@ if ~isempty(answer)
     handles.Motif=Motif;
     info=audioinfo(template);
     handles.tempLength=info.Duration;
-    save fcns\StandardPaths.mat threshold folder template
+    save StandardPaths.mat threshold folder template
     
     [wav,fs]=audioread(template);
     plot(handles.axes5,(1:length(wav))/fs,wav,'k');
