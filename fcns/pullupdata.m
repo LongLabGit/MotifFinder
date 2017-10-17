@@ -39,6 +39,7 @@ if ~isempty(answer)
     if analyze
         for f=1:length(files)
             [start,stop,center,warp]=findMotifs([F,files{f}],template,thresh);
+            Motif(f).file=files{f};
             Motif(f).start=start;
             Motif(f).stop=stop;
             Motif(f).center=center;
