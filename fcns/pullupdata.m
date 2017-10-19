@@ -3,29 +3,29 @@ handles=guidata(hObject);
 load StandardPaths.mat
 prompt = {'Folder Name','Template File','Threshold'};
 dlg_title = 'Load Data';
-defaultans = {folder,...                         %Change this to last path
-              template,...
+defaultans = {fWav,...                         %Change this to last path
+              fTemplate,...
                 threshold};
 answer = inputdlg(prompt,dlg_title,[1,70],defaultans);
 if ~isempty(answer)
     F=answer{1};
-    template=answer{2};
+    fTemplate=answer{2};
     thresh=str2num(answer{3});
-    if ~strcmp(F(end),'\')
+    if ~strcmp(F(end),'\')&&~strcmp(F(end),'/')
         F=[F,'\'];
     end
     files=dir([F,'*.wav']);
     if isempty(files)
         error('Have you tried giving me a folder with wav files in it YOU DUMKOPF?')
     end
-    if ~strcmp(template(end-3:end),'.wav')
+    if ~strcmp(fTemplate(end-3:end),'.wav')
         error('maybe next time give me a wave file for a template, ya?')
     end
     files={files.name};
 
-    folder=F;
+    fWav=F;
     threshold=answer{3};
-
+    analyze=1;
     prevAnalysis=[F,'MotifTimes.mat'];
     if exist(prevAnalysis,'file')
         button = questdlg('You already analyzed this. Redo?','Ack!','Redo','Load Prev','Load Prev');
@@ -38,7 +38,8 @@ if ~isempty(answer)
 
     if analyze
         for f=1:length(files)
-            [start,stop,center,warp]=findMotifs([F,files{f}],template,thresh);
+            fprintf(['Analyzing file #' num2str(f) '/' num2str(length(files))])
+            [start,stop,center,warp]=findMotifs([F,files{f}],fTemplate,thresh);
             Motif(f).file=files{f};
             Motif(f).start=start;
             Motif(f).stop=stop;
@@ -46,6 +47,7 @@ if ~isempty(answer)
             Motif(f).warp=warp;
             Motif(f).thresh=thresh;
         end
+        save([F,'MotifTimes.mat'],'Motif');
         save([F,'MotifTimes_FirstPass.mat'],'Motif');
     else
         load(prevAnalysis) 
@@ -56,13 +58,13 @@ if ~isempty(answer)
     handles.F=F;
     handles.fs=info.SampleRate;
     handles.files=files;
-    handles.template=template;
+    handles.template=fTemplate;
     handles.Motif=Motif;
-    info=audioinfo(template);
+    info=audioinfo(fTemplate);
     handles.tempLength=info.Duration;
-    save StandardPaths.mat threshold folder template
+    save StandardPaths.mat threshold fWav fTemplate
     
-    [wav,fs]=audioread(template);
+    [wav,fs]=audioread(fTemplate);
     plot(handles.axes5,(1:length(wav))/fs,wav,'k');
     axis tight
     vigiSpecGUI(handles.axes4,wav,fs);
