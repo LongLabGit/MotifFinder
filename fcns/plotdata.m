@@ -29,7 +29,7 @@ for m=1:length(Motif(f).start)
     line(handles.axes1,Motif(f).start(m)*[1,1],[500,8e3],'color','g', 'linewidth', 2)
     line(handles.axes1,Motif(f).stop(m)*[1,1],[500,8e3],'color','r', 'linewidth', 2)    
     line(handles.axes1,Motif(f).center(m)*[1,1],[500,8e3],'color','c', 'linewidth', 2)
-    
+
     line(handles.axes2,Motif(f).start(m)*[1,1],[-1,1],'color','g', 'linewidth', 2)
     line(handles.axes2,Motif(f).stop(m)*[1,1],[-1,1],'color','r', 'linewidth', 2)    
     line(handles.axes2,Motif(f).center(m)*[1,1],[-1,1],'color','c', 'linewidth', 2)
